@@ -2,13 +2,14 @@
 name = "procon"
 version = "0.1.0"
 description = ""
-authors = []
+authors = ["agarichan"]
 packages = [
     { include = "procon", from = "src" }
 ]
 
 [tool.poetry.dependencies]
-python = "^3.9.2"
+python = "^3.8.2"
+pydantic = "^1.8.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

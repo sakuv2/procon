@@ -2,7 +2,6 @@ from typing import List, Literal, Tuple
 from unittest import mock
 
 import pytest
-from _pytest.capture import CaptureFixture
 from pydantic import BaseModel
 
 from procon.ABC.p086.d import main

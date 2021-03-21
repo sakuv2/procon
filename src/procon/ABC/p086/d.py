@@ -1,51 +1,53 @@
 # https://atcoder.jp/contests/abc086/tasks/arc089_b
-from dataclasses import dataclass
-from functools import cached_property
 from itertools import product
-from typing import List, Literal, Tuple
+from typing import List, Tuple
 
 
-def get_values() -> Tuple[int, int, str]:
+def get_values() -> Tuple[int, int, int]:
     x, y, c = input().split()
-    return int(x), int(y), c
+    return int(x), int(y), int(c == "W")
 
 
-def get_inputs() -> Tuple[int, List[Tuple[int, int, str]]]:
-    N, K = tuple(map(int, input().split()))
+def get_inputs() -> Tuple[int, List[Tuple[int, int, int]]]:
+    N, K = map(int, input().split())
     return K, [get_values() for _ in range(N)]
 
 
-@dataclass
-class Ichimatsu:
-    x: int
-    y: int
-    c: Literal["W", "B"]
-    k: int
-
-    @cached_property
-    def rev_c(self):
-        return "B" if self.c == "W" else "W"
-
-    def color(self, x: int, y: int) -> Literal["W", "B"]:
-        fx = ((x - self.x) // self.k) % 2 == 0
-        fy = ((y - self.y) // self.k) % 2 == 0
-        return self.c if fx ^ fy else self.rev_c
-
-    def check(self, x: int, y: int, c: Literal["W", "B"]) -> bool:
-        return self.color(x, y) == c
-
-
 def main():
-    K, steps = get_inputs()
-    N = len(steps)
-    max_count = 0
-    for x, y, c in product(range(K), range(K), ["W", "B"]):
-        ichimatsu = Ichimatsu(x, y, c, K)
-        count = [ichimatsu.check(*step) for step in steps].count(True)
-        max_count = count if count > max_count else max_count
-        if max_count == N:
-            break
-    print(max_count)
+    k, steps = get_inputs()
+
+    g = [[[0, 0] for _ in range(k)] for _ in range(k)]
+    for step in steps:
+        x, y, c = step
+        x, y = x % (2 * k), y % (2 * k)
+        c = 1 - c if (x < k) ^ (y < k) else c
+        x, y = x if x < k else x - k, y if y < k else y - k
+        g[x][y][c] += 1
+
+    cs = [[[0] * (k + 1) for _ in range(k + 1)] for _ in range(2)]
+    for x, y, c in product(range(k), range(k), (0, 1)):
+        cs[c][x + 1][y + 1] = cs[c][x + 1][y] + cs[c][x][y + 1] - cs[c][x][y] + g[x][y][c]
+
+    ans = 0
+    for x, y in product(range(k), range(k)):
+        ans = max(
+            cs[0][k][k]
+            - cs[0][x][k]
+            - cs[0][k][y]
+            + 2 * cs[0][x][y]
+            + cs[1][x][k]
+            + cs[1][k][y]
+            - 2 * cs[1][x][y],
+            cs[1][k][k]
+            - cs[1][x][k]
+            - cs[1][k][y]
+            + 2 * cs[1][x][y]
+            + cs[0][x][k]
+            + cs[0][k][y]
+            - 2 * cs[0][x][y],
+            ans,
+        )
+    print(ans)
 
 
 if __name__ == "__main__":

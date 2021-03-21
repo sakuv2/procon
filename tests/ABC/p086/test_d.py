@@ -45,3 +45,4 @@ def test(capfd: CaptureFixture, param: Param):
         main()
         out, _ = capfd.readouterr()
         assert param.out in out
+        print(out)

@@ -9,8 +9,7 @@ def get_values() -> Tuple[int, int]:
 def main():
     a, b = get_values()
 
-    x = int(f"{a}{b}")
-    if (x ** 0.5) % 1 == 0:
+    if (int(f"{a}{b}") ** 0.5) % 1 == 0:
         print("Yes")
     else:
         print("No")

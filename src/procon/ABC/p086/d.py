@@ -1,5 +1,6 @@
 # https://atcoder.jp/contests/abc086/tasks/arc089_b
-# https://atcoder.jp/contests/abc086/submissions/21124856
+# https://atcoder.jp/contests/abc086/submissions/21125672
+from functools import reduce
 from itertools import product
 from typing import List, Tuple
 
@@ -14,7 +15,7 @@ def get_inputs() -> Tuple[int, List[Tuple[int, int, int]]]:
     return K, [get_values() for _ in range(N)]
 
 
-def main():
+def main() -> int:
     k, steps = get_inputs()
 
     g = [[[0] * k for _ in range(k)] for _ in range(2)]
@@ -29,27 +30,18 @@ def main():
     for x, y, c in product(range(k), range(k), (0, 1)):
         cs[c][x + 1][y + 1] = cs[c][x + 1][y] + cs[c][x][y + 1] - cs[c][x][y] + g[c][x][y]
 
-    ans = 0
-    for x, y in product(range(k), range(k)):
-        ans = max(
-            cs[0][k][k]
-            - cs[0][x][k]
-            - cs[0][k][y]
-            + 2 * cs[0][x][y]
-            + cs[1][x][k]
-            + cs[1][k][y]
-            - 2 * cs[1][x][y],
-            cs[1][k][k]
-            - cs[1][x][k]
-            - cs[1][k][y]
-            + 2 * cs[1][x][y]
-            + cs[0][x][k]
-            + cs[0][k][y]
-            - 2 * cs[0][x][y],
-            ans,
-        )
-    print(ans)
+    s = lambda c, x, y: (
+        cs[c][k][k]
+        - cs[c][x][k]
+        - cs[c][k][y]
+        + 2 * cs[c][x][y]
+        + cs[1 - c][x][k]
+        + cs[1 - c][k][y]
+        - 2 * cs[1 - c][x][y]
+    )
+
+    return reduce(lambda x, z: max(x, s(*z)), product(range(2), range(k), range(k)), 0)
 
 
 if __name__ == "__main__":
-    main()
+    print(main())

@@ -12,7 +12,7 @@ class Param(BaseModel):
     N: int
     K: int
     steps: List[Tuple[int, int, Literal["B", "W"]]]
-    out: str
+    out: int
 
     def input(self):
         yield " ".join([str(self.N), str(self.K)])
@@ -39,10 +39,7 @@ class Param(BaseModel):
         ),
     ],
 )
-def test(capfd: CaptureFixture, param: Param):
+def test(param: Param):
     inp = param.input()
     with mock.patch("builtins.input", lambda: next(inp)):
-        main()
-        out, _ = capfd.readouterr()
-        assert param.out in out
-        print(out)
+        assert main() == param.out

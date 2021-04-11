@@ -1,17 +1,20 @@
-# title: {title}
-# problem link: {link}
+# title: Rotate
+# problem link: https://atcoder.jp/contests/abc197/tasks/abc197_a
 
 from unittest import mock
 
 import pytest
 
-from {path_param} import Param
-from {path_main} import main
+from procon import Param
+from procon.abc.abc197.a import main
 
 
 @pytest.mark.parametrize(
     "param",
-{params},
+    [
+        Param(inputs=["abc"], outputs=["bca"]),
+        Param(inputs=["aab"], outputs=["aba"]),
+    ],
 )
 def test(param: Param):
     inp = param.gen_inputs()

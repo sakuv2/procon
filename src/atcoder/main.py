@@ -71,6 +71,8 @@ class Problem:
             txt = f.read()
         txt = txt.format(link=url, title=self.title)
         answer_path = Path(f"src/{project}/{contest_cat}/{contest}/{self.id}.py")
+        if answer_path.exists():
+            return
         answer_path.parent.mkdir(parents=True, exist_ok=True)
         with open(answer_path, "w") as f:
             f.write(txt)

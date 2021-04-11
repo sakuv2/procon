@@ -1,5 +1,5 @@
-# title: {title}
-# problem link: {link}
+# title: Construct a Palindrome
+# problem link: https://atcoder.jp/contests/abc197/tasks/abc197_f
 
 from typing import Union
 

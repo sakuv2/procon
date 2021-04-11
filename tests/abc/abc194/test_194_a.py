@@ -1,27 +1,25 @@
-from typing import List, Tuple
 from unittest import mock
 
 import pytest
 from pydantic import BaseModel
 
-from procon.ABC.p194.b import main
+from procon.abc.abc194.a import main
 
 
 class Param(BaseModel):
-    N: int
-    steps: List[Tuple[int, int]]
+    a: int
+    b: int
     out: int
 
     def input(self):
-        yield str(self.N)
-        yield from map(lambda x: " ".join(map(str, x)), self.steps)
+        yield " ".join(map(str, [self.a, self.b]))
 
 
 @pytest.mark.parametrize(
     "param",
     [
-        Param(N=3, steps=[(8, 5), (4, 4), (7, 9)], out=5),
-        Param(N=3, steps=[(11, 7), (3, 2), (6, 7)], out=5),
+        Param(a=1, b=2, out=3),
+        Param(a=0, b=0, out=4),
     ],
 )
 def test(param: Param):

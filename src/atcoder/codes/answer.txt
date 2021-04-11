@@ -1,0 +1,12 @@
+# title: {title}
+# problem link: {link}
+
+from typing import List
+
+
+def main() -> List[str]:
+    return ...
+
+
+if __name__ == "__main__":
+    [*map(print, main())]

@@ -1,25 +1,27 @@
+from typing import List
 from unittest import mock
 
 import pytest
 from pydantic import BaseModel
 
-from procon.ABC.p194.a import main
+from procon.abc.abc194.c import main
 
 
 class Param(BaseModel):
-    a: int
-    b: int
+    N: int
+    arr: List[int]
     out: int
 
     def input(self):
-        yield " ".join(map(str, [self.a, self.b]))
+        yield str(self.N)
+        yield " ".join(map(str, self.arr))
 
 
 @pytest.mark.parametrize(
     "param",
     [
-        Param(a=1, b=2, out=3),
-        Param(a=0, b=0, out=4),
+        Param(N=3, arr=[2, 8, 4], out=56),
+        Param(N=5, arr=[-5, 8, 9, -4, -3], out=950),
     ],
 )
 def test(param: Param):

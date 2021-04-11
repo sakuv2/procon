@@ -5,7 +5,7 @@ import pytest
 from _pytest.capture import CaptureFixture
 from pydantic import BaseModel
 
-from procon.ABC.p086.c import main
+from procon.abc.abc086.c import main
 
 
 class Param(BaseModel):

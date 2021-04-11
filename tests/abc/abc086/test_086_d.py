@@ -4,7 +4,7 @@ from unittest import mock
 import pytest
 from pydantic import BaseModel
 
-from procon.ABC.p086.d import main
+from procon.abc.abc086.d import main
 
 
 class Param(BaseModel):

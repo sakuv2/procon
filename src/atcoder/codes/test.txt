@@ -1,0 +1,19 @@
+# title: {title}
+# problem link: {link}
+
+from unittest import mock
+
+import pytest
+
+from {path_param} import Param
+from {path_main} import main
+
+
+@pytest.mark.parametrize(
+    "param",
+{params},
+)
+def test(param: Param):
+    inp = param.gen_inputs()
+    with mock.patch("builtins.input", lambda: next(inp)):
+        assert main() == param.outputs

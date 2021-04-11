@@ -4,12 +4,18 @@ version = "0.1.0"
 description = ""
 authors = ["agarichan"]
 packages = [
-    { include = "procon", from = "src" }
+    { include = "procon", from = "src" },
+    { include = "atcoder", from = "src" }
 ]
+
+[tool.poetry.scripts]
+atcoder = 'atcoder.main:run'
 
 [tool.poetry.dependencies]
 python = "^3.6.9"
 pydantic = "^1.8.1"
+requests = "^2.25.1"
+beautifulsoup4 = "^4.9.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

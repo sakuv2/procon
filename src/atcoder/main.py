@@ -124,7 +124,7 @@ class Contest:
         self.path_src.mkdir(parents=True, exist_ok=True)
         self.path_tests.mkdir(parents=True, exist_ok=True)
 
-        for problem in self.problems[:1]:
+        for problem in self.problems:
             task_url = self.top + "/tasks"
             problem.generate(
                 project=self.project,
